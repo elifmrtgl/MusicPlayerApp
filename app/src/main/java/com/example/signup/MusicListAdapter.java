@@ -1,5 +1,6 @@
 package com.example.signup;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,22 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.ViewHolder>{
 
-    ArrayList<AudioModel> songsList;
+    ArrayList<AudioModel> songs;
     Context context;
 
-    public MusicListAdapter(ArrayList<AudioModel> songsList, Context context) {
-        this.songsList = songsList;
+    public MusicListAdapter(ArrayList<AudioModel> songs, Context context) {
+        this.songs = songs;
         this.context = context;
     }
 
@@ -36,14 +32,14 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        AudioModel songData = songsList.get(position);
-        holder.titleTextView.setText(songData.getArtist()+" - "+songData.getTitle());
+    public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        AudioModel songData = songs.get(position);
+        holder.title.setText(songData.getArtist()+" - "+songData.getTitle());
 
         if(MyMediaPlayer.currentIndex==position){
-            holder.titleTextView.setTextColor(Color.parseColor("#ff0000"));
+            holder.title.setTextColor(Color.parseColor("#ff0000"));
         }else{
-            holder.titleTextView.setTextColor(Color.parseColor("#000000"));
+            holder.title.setTextColor(Color.parseColor("#000000"));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +48,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                 MyMediaPlayer.getInstance().reset();
                 MyMediaPlayer.currentIndex=position;
                 Intent intent = new Intent(context,MusicPlayerActivity.class);
-                intent.putExtra("LIST", songsList);
+                intent.putExtra("LIST", songs);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -61,18 +57,18 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 
     @Override
     public int getItemCount() {
-        return songsList.size();
+        return songs.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView titleTextView;
-        ImageView iconImageView;
+        TextView title;
+        ImageView icon;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.music_title_text);
-            iconImageView = itemView.findViewById(R.id.icon_view);
+            title = itemView.findViewById(R.id.music_title_text);
+            icon = itemView.findViewById(R.id.icon_view);
         }
     }
 

@@ -48,7 +48,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/bigmusicicon"
         android:padding="20dp" />
-
+        <!---->
 
 
     <RelativeLayout

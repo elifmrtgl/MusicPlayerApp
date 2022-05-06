@@ -4,15 +4,15 @@ import android.media.MediaPlayer;
 
 public class MyMediaPlayer {
 
-    static MediaPlayer instance;
+    static MediaPlayer aMediaPlayer;
 
     public static MediaPlayer getInstance(){
-        if(instance==null){
-            instance=new MediaPlayer();
+        if(aMediaPlayer==null){
+            aMediaPlayer=new MediaPlayer();
         }else{
 
         }
-        return instance;
+        return aMediaPlayer;
     }
 
     public static int currentIndex = -1;

@@ -7,13 +7,16 @@ public class AudioModel implements Serializable {
     String title;
     String duration;
     String artist;
+    String songID;
     String albumID;
 
-    public AudioModel(String path, String title, String duration, String artist, String albumID){
+    public AudioModel(String path, String title, String duration, String artist,
+                      String songID, String albumID){
         this.path=path;
         this.title=title;
         this.duration=duration;
         this.artist=artist;
+        this.songID=songID;
         this.albumID=albumID;
     }
 
@@ -47,6 +50,14 @@ public class AudioModel implements Serializable {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getSongID() {
+        return songID;
+    }
+
+    public void setSongID(String songID) {
+        this.songID = songID;
     }
 
     public String getAlbumID() {

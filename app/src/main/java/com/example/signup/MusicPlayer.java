@@ -26,20 +26,20 @@ import java.util.ArrayList;
 public class MusicPlayer extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    TextView noMusicTextView;
-    ArrayList<AudioModel> songsList = new ArrayList<>();
+    TextView noSongsFoundTextView;
+    ArrayList<AudioModel> songs = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.O) //49.satir query fix'i icin eklendi
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
 
         recyclerView = findViewById(R.id.recycler_view);
-        noMusicTextView = findViewById(R.id.no_songs_text);
+        noSongsFoundTextView = findViewById(R.id.no_songs_text);
 
-        if(checkPermission()==false){
-            requestPermission();
+        if(checkForPermission()==false){
+            requestForPermission();
             return;
         }
 
@@ -48,31 +48,31 @@ public class MusicPlayer extends AppCompatActivity {
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media._ID,
                 MediaStore.Audio.Media.ALBUM_ID
-                //TODO kapak fotografi icin id ve artist cekilecek
         };
 
         String selection = MediaStore.Audio.Media.IS_MUSIC +" != 0";
 
-        Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,projection,selection,null,null  );
+        Cursor myCursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,projection,selection,null,null  );
 
-        while(cursor.moveToNext()){
-            AudioModel songData = new AudioModel(cursor.getString(1),cursor.getString(0), cursor.getString(2),cursor.getString(3), cursor.getString(4));
+        while(myCursor.moveToNext()){
+            AudioModel songData = new AudioModel(myCursor.getString(1),myCursor.getString(0), myCursor.getString(2),myCursor.getString(3), myCursor.getString(4), myCursor.getString(5));
             if(new File(songData.getPath()).exists()){
-                Log.d("myTag", "This is my message");
-                songsList.add(songData);
+                Log.d("myTag", "deneme");
+                songs.add(songData);
             }
         }
-        if(songsList.size()==0){
-            noMusicTextView.setVisibility(View.VISIBLE);
+        if(songs.size()==0){
+            noSongsFoundTextView.setVisibility(View.VISIBLE);
         }else{
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new MusicListAdapter(songsList,getApplicationContext()));
+            recyclerView.setAdapter(new MusicListAdapter(songs,getApplicationContext()));
         }
 
     }
 
-    boolean checkPermission(){
+    boolean checkForPermission(){
         int result = ContextCompat.checkSelfPermission(MusicPlayer.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if(result == PackageManager.PERMISSION_GRANTED){
             return true;
@@ -81,7 +81,7 @@ public class MusicPlayer extends AppCompatActivity {
         }
     }
 
-    void requestPermission(){
+    void requestForPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(MusicPlayer.this, Manifest.permission.READ_EXTERNAL_STORAGE)){
             Toast.makeText(MusicPlayer.this, "Permission is needed, please allow from settings.", Toast.LENGTH_SHORT);
         }else{
@@ -93,7 +93,7 @@ public class MusicPlayer extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(recyclerView!=null){
-            recyclerView.setAdapter(new MusicListAdapter(songsList,getApplicationContext()));
+            recyclerView.setAdapter(new MusicListAdapter(songs,getApplicationContext()));
         }
     }
 }

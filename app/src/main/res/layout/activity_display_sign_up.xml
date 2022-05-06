@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Ad Soyad:"
+        android:text="Name Surname:"
         app:layout_constraintBaseline_toBaselineOf="@+id/editTextTextPersonName"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Telefon:"
+        android:text="Phone:"
         app:layout_constraintBaseline_toBaselineOf="@+id/editTextPhone"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="44dp"
-        android:text="Şifre:"
+        android:text="Password:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tarih" />
 
@@ -65,7 +65,7 @@
         android:layout_marginTop="168dp"
         android:layout_marginEnd="65dp"
         android:ems="10"
-        android:hint="username"
+        android:hint="Name Surname"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Doğum Tarihi:"
+        android:text="Birth Date:"
         app:layout_constraintBaseline_toBaselineOf="@+id/editTextDate"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="7dp"
-        android:text="Şifre Tekrar: "
+        android:text="Password: "
         app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword2"
         app:layout_constraintStart_toStartOf="parent" />
 

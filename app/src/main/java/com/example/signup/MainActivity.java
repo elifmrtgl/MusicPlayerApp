@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView userName;
     private TextView passWord;
     private int counter=0;
-
+    private int check=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
 
             if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
+                check=1;
                 Toast.makeText(getApplicationContext(), "Log in succeed.",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MusicPlayer.class);
                 try{
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                 counter++;
             }
-            if(counter>3){
+            if(counter%3==0 && check==-1){
                 Toast.makeText(getApplicationContext(), "You have exceeded the limit.",Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(this,DisplaySignUp.class);
                 try{

@@ -19,8 +19,6 @@ public class DisplaySignUp extends AppCompatActivity {
     private EditText password2;
     private Button signupButton;
     private EditText birthDate;
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +33,9 @@ public class DisplaySignUp extends AppCompatActivity {
         signupButton=(Button)findViewById(R.id.signupButton);
         birthDate=(EditText)findViewById(R.id.editTextDate);
 
-        /*sp=getSharedPreferences("KayitBilgi",MODE_PRIVATE);
-        editor=sp.edit();*/
-
-        //Intent intent = getIntent();
-
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //signup2(view);
-                //Toast.makeText(getApplicationContext(), "Log in succeed.",Toast.LENGTH_SHORT).show();
 
                 if(!password.getText().toString().equals(password2.getText().toString())){
                     Toast.makeText(getApplicationContext(), "The passwords are not matching. Please try again.",Toast.LENGTH_SHORT).show();
@@ -74,12 +65,6 @@ public class DisplaySignUp extends AppCompatActivity {
         });
 
     }
-
-    /*public void signup2(View view){
-
-
-
-    }*/
 
 
 }

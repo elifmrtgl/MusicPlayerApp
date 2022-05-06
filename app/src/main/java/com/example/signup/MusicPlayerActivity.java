@@ -2,7 +2,9 @@ package com.example.signup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentUris;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -17,9 +19,9 @@ import java.util.concurrent.TimeUnit;
 public class MusicPlayerActivity extends AppCompatActivity {
 
 
-    TextView title, currentTime, totalTime, artist;
+    TextView name, currentTime, totalTime, artist;
     SeekBar seekBar;
-    ImageView pausePlay, next, previous, musicIconBig, albumID;
+    ImageView pausePlayBtn, nextSong, previousSong, musicIconBig, coverImg;
     ArrayList<AudioModel> songsList;
     AudioModel currentSong;
     MediaPlayer mediaPlayer = MyMediaPlayer.getInstance();
@@ -29,18 +31,18 @@ public class MusicPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player2);
 
-        title=findViewById(R.id.song_title);
+        name=findViewById(R.id.song_title);
         currentTime=findViewById(R.id.current_time);
         totalTime=findViewById(R.id.total_time);
         artist=findViewById(R.id.song_artist);
-        albumID=findViewById(R.id.music_icon_big);//
+        coverImg=findViewById(R.id.music_icon_big);
         seekBar=findViewById(R.id.seek_bar);
-        pausePlay=findViewById(R.id.pause_play);
-        next=findViewById(R.id.next);
-        previous=findViewById(R.id.previous);
+        pausePlayBtn=findViewById(R.id.pause_play);
+        nextSong=findViewById(R.id.next);
+        previousSong=findViewById(R.id.previous);
         musicIconBig=findViewById(R.id.music_icon_big);
 
-        title.setSelected(true);
+        name.setSelected(true);
 
         songsList = (ArrayList<AudioModel>)getIntent().getSerializableExtra("LIST");
         setResourcesWithMusic();
@@ -52,9 +54,10 @@ public class MusicPlayerActivity extends AppCompatActivity {
                     currentTime.setText(convertToMMSS(mediaPlayer.getCurrentPosition()+""));
 
                     if(mediaPlayer.isPlaying()){
-                        pausePlay.setImageResource(R.drawable.ic_baseline_pause_24);
+                        pausePlayBtn.setImageResource(R.drawable.ic_baseline_pause_24);
+
                     }else{
-                        pausePlay.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                        pausePlayBtn.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
                     }
                 }
@@ -85,14 +88,15 @@ public class MusicPlayerActivity extends AppCompatActivity {
     void setResourcesWithMusic(){
         currentSong = songsList.get(MyMediaPlayer.currentIndex);
 
-        title.setText(currentSong.getTitle());
+        name.setText(currentSong.getTitle());
         artist.setText(currentSong.getArtist());
         totalTime.setText(convertToMMSS(currentSong.getDuration()));
-        //albumID.setImageResource();
+        Uri artworkUri = Uri.parse("content://media/external/audio/media/"+currentSong.getSongID()+"/albumart");
+        coverImg.setImageURI(artworkUri);
 
-        pausePlay.setOnClickListener(v->pausePlay());
-        next.setOnClickListener(v->playNextSong());
-        previous.setOnClickListener(v->playPreviousSong());
+        pausePlayBtn.setOnClickListener(v->pausePlay());
+        nextSong.setOnClickListener(v->playNextSong());
+        previousSong.setOnClickListener(v->playPreviousSong());
 
         playMusic();
 
