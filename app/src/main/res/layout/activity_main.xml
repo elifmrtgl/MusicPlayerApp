@@ -91,5 +91,14 @@
         android:layout_centerHorizontal="true"
         android:text="Welcome!" />
 
+    <Button
+        android:id="@+id/airplane"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AirplaneCheck"
+        android:layout_below="@id/signup"
+        android:layout_centerHorizontal="true"
+        />
+
 
 </RelativeLayout>

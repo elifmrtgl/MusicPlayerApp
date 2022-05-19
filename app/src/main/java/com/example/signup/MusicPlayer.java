@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -28,6 +29,7 @@ public class MusicPlayer extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView noSongsFoundTextView;
     ArrayList<AudioModel> songs = new ArrayList<>();
+    SensorReceiver sensorReceiver = new SensorReceiver();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -37,6 +39,10 @@ public class MusicPlayer extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         noSongsFoundTextView = findViewById(R.id.no_songs_text);
+
+        IntentFilter filter = new IntentFilter("com.example.application.BroadcastSensor");
+        registerReceiver(sensorReceiver, filter);
+
 
         if(checkForPermission()==false){
             requestForPermission();
@@ -89,11 +95,18 @@ public class MusicPlayer extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         if(recyclerView!=null){
             recyclerView.setAdapter(new MusicListAdapter(songs,getApplicationContext()));
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        unregisterReceiver(sensorReceiver);
     }
 }
